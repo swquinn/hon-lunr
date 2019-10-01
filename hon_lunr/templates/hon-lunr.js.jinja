@@ -1,0 +1,31 @@
+/**
+ * hon_lunr - http://github.com/swquinn/hon-lunr - A search plugin using Lunr for Hon.
+ * @license MIT
+ */
+;(function() {
+  hon.plugins.lunr = {}
+
+  {% block search_index %}
+  const searchData = {{ hon_lunr.search_index }};
+  {% endblock %}
+
+  /**
+   */
+  hon.plugins.lunr = {
+    'searchIndex': null,
+  };
+
+  /**
+   *
+   */
+  hon.plugins.lunr.search = function(queryString) {
+    return hon.plugins.lunr.searchIndex.search(queryString);
+  };
+
+  /**
+   *
+   */
+  document.addEventListener('DOMContentLoaded', function(event) {
+    hon.plugins.lunr.searchIndex = lunr.Index.load(searchData);
+  });
+})();
